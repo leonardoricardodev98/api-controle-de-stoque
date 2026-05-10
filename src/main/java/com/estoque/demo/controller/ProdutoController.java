@@ -37,4 +37,31 @@ public class ProdutoController {
     public void deletarProduto(@PathVariable Long id) {
         produtos.removeIf(produto -> produto.getId().equals(id));
     }
+
+    @GetMapping("/compras/sugeridas")
+    public List<Produto> listarcomprasSugeridas() {
+
+        List<Produto> sugestoes = new ArrayList<>();
+
+        for (Produto produto : produtos) {
+            if (produto.getQuantidade() <= produto.getQuantidadeMinima()) {
+                sugestoes.add(produto);
+            }
+        }
+
+        return sugestoes;
+    }
+
+    @GetMapping("/produtos/categoria/{categoria}")
+    public List<Produto> buscarPorCategoria(@PathVariable String categoria) {
+        List<Produto> produtosFiltrados = new ArrayList<>();
+
+        for (Produto produto : produtos) {
+            if (produto.getCategoria().equalsIgnoreCase(categoria)) {
+                produtosFiltrados.add(produto);
+            }
+        }
+
+        return produtosFiltrados;
+    }
 }
