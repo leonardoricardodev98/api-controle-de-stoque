@@ -18,6 +18,11 @@ public class Produto {
         this.quantidadeMinima = quantidadeMinima;
     }
 
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+
     public Long getId() {
         return id;
     }

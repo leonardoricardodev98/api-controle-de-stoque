@@ -14,4 +14,8 @@ public class Carrinho {
     public void adicionarProduto(Produto produto) {
         itens.add(produto);
     }
+
+    public void removerProduto(Produto produto) {
+        itens.remove(produto);
+    }
 }
