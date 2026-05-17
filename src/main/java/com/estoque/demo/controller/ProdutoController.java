@@ -5,6 +5,7 @@ import com.estoque.demo.model.Produto;
 import org.springframework.web.bind.annotation.*;
 import com.estoque.demo.service.ProdutoService;
 import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,10 +69,13 @@ public class ProdutoController {
     }
 
     @PostMapping("/produtos")
-    public ResponseEntity<String> adicionarProduto(@RequestBody Produto produto) {
+    public ResponseEntity<String> adicionarProduto(
+            @Valid @RequestBody Produto produto) {
+
         String resposta = produtoService.adicionarProduto(produto);
 
         if (resposta.equals("Já existe um produto com esse ID.")) {
+
             return ResponseEntity.badRequest().body(resposta);
         }
 
@@ -79,15 +83,8 @@ public class ProdutoController {
     }
 
     @GetMapping("/produtos/{id}")
-    public ResponseEntity<?> buscarProdutoPorId(@PathVariable Long id) {
-
-        Produto produto = produtoService.buscarProdutoPorId(id);
-
-        if (produto == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(produto);
+    public ResponseEntity<Produto> buscarProdutoPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(produtoService.buscarProdutoPorId(id));
     }
 
     @PutMapping("/produtos/{id}")

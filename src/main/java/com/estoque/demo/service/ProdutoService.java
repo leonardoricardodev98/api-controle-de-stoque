@@ -2,6 +2,7 @@ package com.estoque.demo.service;
 
 import com.estoque.demo.model.Produto;
 import org.springframework.stereotype.Service;
+import com.estoque.demo.exception.ProdutoNaoEncontradoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +32,13 @@ public class ProdutoService {
     }
 
     public Produto buscarProdutoPorId(Long id) {
-
         for (Produto produto : produtos) {
-
             if (produto.getId().equals(id)) {
                 return produto;
             }
         }
 
-        return null;
+        throw new ProdutoNaoEncontradoException();
     }
 
     public String atualizarProduto(Long id, Produto produtoAtualizado) {
